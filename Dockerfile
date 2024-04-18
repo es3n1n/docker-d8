@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:22.04 AS builder
 
 WORKDIR /compilers
 
@@ -31,10 +31,7 @@ RUN gn gen out/x64.release \
 
 RUN strip out/x64.release/d8
 
-RUN cp out/x64.release/d8 /usr/local/bin/ \
-    && cp out/x64.release/*.so /usr/local/lib/ 
+FROM scratch
 
-ENV LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
-
-WORKDIR /
-RUN rm -rf /compilers/
+COPY --from=builder /compilers/v8/out/x64.release/d8 /v8/
+COPY --from=builder /compilers/v8/out/x64.release/*.so /v8/lib/
