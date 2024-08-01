@@ -1,6 +1,6 @@
 # docker-d8
 
-Automated builds soon tm
+Docker images with d8 dist binaries. These images get updated whenever I feel like updating them. You can request an update through issues.
 
 ## Docker hub
 
